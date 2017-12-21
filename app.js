@@ -249,7 +249,6 @@ var getStats = function(){
       var adminDb = db.admin();
       adminDb.serverStatus(function(err, info) {
           stats = info;
-          console.log(stats);
           db.close();
       })
   })
