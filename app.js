@@ -59,11 +59,27 @@ pmx.initModule({
     name        : '[AVG] Connections',
     measurement : 'mean'
   });
+  var histogramInsert = Probe.histogram({
+    name        : '[AVG] Insert',
+    measurement : 'mean'
+  });
+  var histogramUpdate = Probe.histogram({
+    name        : '[AVG] Update',
+    measurement : 'mean'
+  });
+  var histogramQuery = Probe.histogram({
+    name        : '[AVG] Query',
+    measurement : 'mean'
+  });
+  var histogramDelete = Probe.histogram({
+    name        : '[AVG] Delete',
+    measurement : 'mean'
+  });
 
    Probe.metric({
-    name : 'Version MongoDB',
+    name : 'MongoDB',
     value : function() {
-      return stats.version;
+      return "v."+stats.version;
     }
   });
 
@@ -77,7 +93,6 @@ pmx.initModule({
     name : 'Connections',
     value : function() {
       histogramConex.update(stats.connections.current);
-
       return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"]";
     }
   });
@@ -91,9 +106,31 @@ pmx.initModule({
     }
   });
   Probe.metric({
-    name : '[METRICS] Insert',
+    name : 'Insert',
     value : function() {
+      histogramInsert.update(stats.metrics.document.inserted);
       return stats.metrics.document.inserted;
+    }
+  });
+  Probe.metric({
+    name : 'Deleted',
+    value : function() {
+      histogramDelete.update(stats.metrics.document.deleted);
+      return stats.metrics.document.deleted;
+    }
+  });
+  Probe.metric({
+    name : 'Returned',
+    value : function() {
+      histogramQuery.update(stats.metrics.document.returned);
+      return stats.metrics.document.returned;
+    }
+  });
+  Probe.metric({
+    name : 'Updated',
+    value : function() {
+      histogramUpdate.update(stats.metrics.document.updated);
+      return stats.metrics.document.updated;
     }
   });
 
@@ -126,26 +163,26 @@ pmx.initModule({
   Probe.metric({
     name : 'MEMORY',
     value : function() {
-      return  (stats.men.virtual)+"-bit";
+      return  (stats.mem.virtual)+"-bit";
     }
   });
 
   Probe.metric({
     name : '[MEMORY] Virtual',
     value : function() {
-      return  (stats.men.virtual)+" MB";
+      return  (stats.mem.virtual)+" MB";
     }
   });
   Probe.metric({
     name : '[MEMORY] Resident',
     value : function() {
-      return  (stats.men.virtual)+" MB";
+      return  (stats.mem.virtual)+" MB";
     }
   });
   Probe.metric({
     name : '[MEMORY] Mapped',
     value : function() {
-      return  (stats.men.mapped)+" MB";
+      return  (stats.mem.mapped)+" MB";
     }
   });
 
