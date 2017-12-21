@@ -55,26 +55,6 @@ pmx.initModule({
 
   var value_to_inspect = 0;
 
-  var histogramConex = Probe.histogram({
-    name        : '[AVG] Connections',
-    measurement : 'mean'
-  });
-  var histogramInsert = Probe.histogram({
-    name        : '[AVG] Insert',
-    measurement : 'mean'
-  });
-  var histogramUpdate = Probe.histogram({
-    name        : '[AVG] Update',
-    measurement : 'mean'
-  });
-  var histogramQuery = Probe.histogram({
-    name        : '[AVG] Query',
-    measurement : 'mean'
-  });
-  var histogramDelete = Probe.histogram({
-    name        : '[AVG] Delete',
-    measurement : 'mean'
-  });
 
    Probe.metric({
     name : 'MongoDB',
@@ -97,40 +77,16 @@ pmx.initModule({
     }
   });
 
+  var histogramConex = Probe.histogram({
+    name        : '[AVG] Connections',
+    measurement : 'mean'
+  });
 
 
   Probe.metric({
     name : 'Network',
     value : function() {
       return "⬇ "+bytesToSize(stats.network.bytesIn)+" ⬆ "+bytesToSize(stats.network.bytesOut);
-    }
-  });
-  Probe.metric({
-    name : 'Insert',
-    value : function() {
-      histogramInsert.update(stats.metrics.document.inserted);
-      return stats.metrics.document.inserted;
-    }
-  });
-  Probe.metric({
-    name : 'Deleted',
-    value : function() {
-      histogramDelete.update(stats.metrics.document.deleted);
-      return stats.metrics.document.deleted;
-    }
-  });
-  Probe.metric({
-    name : 'Returned',
-    value : function() {
-      histogramQuery.update(stats.metrics.document.returned);
-      return stats.metrics.document.returned;
-    }
-  });
-  Probe.metric({
-    name : 'Updated',
-    value : function() {
-      histogramUpdate.update(stats.metrics.document.updated);
-      return stats.metrics.document.updated;
     }
   });
 
@@ -163,7 +119,7 @@ pmx.initModule({
   Probe.metric({
     name : 'MEMORY',
     value : function() {
-      return  (stats.mem.virtual)+"-bit";
+      return  (stats.mem.bits)+"-bit";
     }
   });
 
