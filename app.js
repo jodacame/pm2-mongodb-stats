@@ -78,7 +78,7 @@ pmx.initModule({
   });
 
   var histogramConex = Probe.histogram({
-    name        : '[AVG] Connections',
+    name        : 'Connections [AVG]',
     measurement : 'mean'
   });
 
@@ -91,25 +91,25 @@ pmx.initModule({
   });
 
   Probe.metric({
-    name : '[TOTAL] Insert',
+    name : 'Insert [TOTAL]',
     value : function() {
       return stats.opcounters.insert;
     }
   });
   Probe.metric({
-    name : '[TOTAL] Query',
+    name : 'Query [TOTAL]',
     value : function() {
       return stats.opcounters.query;
     }
   });
   Probe.metric({
-    name : '[TOTAL] Update',
+    name : 'Update [TOTAL]',
     value : function() {
       return stats.opcounters.update;
     }
   });
   Probe.metric({
-    name : '[TOTAL] Delete',
+    name : 'Delete [TOTAL]',
     value : function() {
       return stats.opcounters.delete;
     }
@@ -124,19 +124,19 @@ pmx.initModule({
   });
 
   Probe.metric({
-    name : '[MEMORY] Virtual',
+    name : 'Virtual',
     value : function() {
       return  (stats.mem.virtual)+" MB";
     }
   });
   Probe.metric({
-    name : '[MEMORY] Resident',
+    name : 'Resident',
     value : function() {
       return  (stats.mem.virtual)+" MB";
     }
   });
   Probe.metric({
-    name : '[MEMORY] Mapped',
+    name : 'Mapped',
     value : function() {
       return  (stats.mem.mapped)+" MB";
     }
