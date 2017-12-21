@@ -78,7 +78,7 @@ pmx.initModule({
     value : function() {
       histogramConex.update(stats.connections.current);
 
-      return stats.connections.current+"/"+stats.connections.available;
+      return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"]";
     }
   });
 
@@ -91,29 +91,64 @@ pmx.initModule({
     }
   });
   Probe.metric({
-    name : 'Insert',
+    name : '[METRICS] Insert',
+    value : function() {
+      return stats.metrics.document.inserted;
+    }
+  });
+
+  Probe.metric({
+    name : '[TOTAL] Insert',
     value : function() {
       return stats.opcounters.insert;
     }
   });
   Probe.metric({
-    name : 'Query',
+    name : '[TOTAL] Query',
     value : function() {
       return stats.opcounters.query;
     }
   });
   Probe.metric({
-    name : 'Update',
+    name : '[TOTAL] Update',
     value : function() {
       return stats.opcounters.update;
     }
   });
   Probe.metric({
-    name : 'Delete',
+    name : '[TOTAL] Delete',
     value : function() {
       return stats.opcounters.delete;
     }
   });
+
+
+  Probe.metric({
+    name : 'MEMORY',
+    value : function() {
+      return  (stats.men.virtual)+"-bit";
+    }
+  });
+
+  Probe.metric({
+    name : '[MEMORY] Virtual',
+    value : function() {
+      return  (stats.men.virtual)+" MB";
+    }
+  });
+  Probe.metric({
+    name : '[MEMORY] Resident',
+    value : function() {
+      return  (stats.men.virtual)+" MB";
+    }
+  });
+  Probe.metric({
+    name : '[MEMORY] Mapped',
+    value : function() {
+      return  (stats.men.mapped)+" MB";
+    }
+  });
+
 
 
   setInterval(function() {
