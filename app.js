@@ -5,6 +5,7 @@ stats.connections = {};
 stats.network = {};
 stats.opcounters = {};
 
+/* TODO: Web */
 pmx.initModule({
 
 
