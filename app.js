@@ -84,7 +84,7 @@ pmx.initModule({
         console.error('MongoDB 100+ connections');
       },
       cmp   : function(value, threshold) { //optional
-        return (parseFloat(value) > threshold); // default check
+        return (parseFloat(stats.connections.current) > threshold); // default check
       }
     }
   });
