@@ -155,10 +155,9 @@ pmx.initModule({
   });
 
 
+var refresh_rate = 1000;
 
-  setInterval(function() {
-
-    var refresh_rate = 1000;
+setInterval(function() {
     getStats(function(data){
       if (typeof stats.lastInsert != 'undefined') {
           stats.insert = (Math.round((data.opcounters.insert - stats.lastInsert) * 1000 / refresh_rate));
