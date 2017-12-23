@@ -128,31 +128,6 @@ pmx.initModule({
   });
 
 
-  Probe.metric({
-    name : 'MEMORY',
-    value : function() {
-      return  (stats.mem.bits)+"-bit";
-    }
-  });
-
-  Probe.metric({
-    name : 'Virtual',
-    value : function() {
-      return  (stats.mem.virtual)+" MB";
-    }
-  });
-  Probe.metric({
-    name : 'Resident',
-    value : function() {
-      return  (stats.mem.virtual)+" MB";
-    }
-  });
-  Probe.metric({
-    name : 'Mapped',
-    value : function() {
-      return  (stats.mem.mapped)+" MB";
-    }
-  });
 
 
 var refresh_rate = 1000;
