@@ -95,7 +95,7 @@ pmx.initModule({
   Probe.metric({
     name : 'Network',
     value : function() {
-      return "⬇ "+bytesToSize(stats.netIn)+" ⬆ "+bytesToSize(stats.netOut);
+      return "⬇ "+bytesToSize(stats.netIn)+"/sec ⬆ "+bytesToSize(stats.netOut)+"/sec";
     }
   });
 
