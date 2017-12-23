@@ -8,6 +8,8 @@ PM2 MongoDB Stats Metrics
 * Number of connections
 * Network speed (input and output)
 
+![Screenshot](https://raw.githubusercontent.com/jodacame/pm2-mongodb-stats/master/capture.png)
+
 
 **Install**
 
