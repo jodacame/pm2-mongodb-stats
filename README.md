@@ -1,5 +1,11 @@
 # pm2-mongodb-stats
 
+[![NPM](https://nodei.co/npm/pm2-mongodb-stats.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/pm2-mongodb-stats/)
+
+![alt text](https://david-dm.org/jodacame/pm2-mongodb-stats.svg "Dependencies Status")
+[![Maintainability](https://api.codeclimate.com/v1/badges/c257bbe7c9cad9aea555/maintainability)](https://codeclimate.com/github/jodacame/pm2-mongodb-stats/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/c257bbe7c9cad9aea555/test_coverage)](https://codeclimate.com/github/jodacame/pm2-mongodb-stats/test_coverage)
+
+
 PM2 MongoDB Stats Metrics
 
 * MongoDB Version
