@@ -176,7 +176,7 @@ pmx.initModule({
         stats.lastCommand = data.opcounters.command;
         stats.lastBytesIn = data.network.bytesIn;
         stats.lastBytesOut = data.network.bytesOut;
-        console.log(stats);
+        //console.log(stats);
     });
   }, 1000);
 
@@ -234,7 +234,7 @@ var getStats = function(callback){
   var conn = MongoClient.connect(url, function(err, db) {
       var adminDb = db.admin();
       adminDb.serverStatus(function(err, info) {
-          stats = info;
+          //stats = info;
           db.close();
           if(callback)
             callback(info);
@@ -254,4 +254,4 @@ function bytesToSize(bytes) {
    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
-getStats();
+//getStats();
