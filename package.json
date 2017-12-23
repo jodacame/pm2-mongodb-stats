@@ -1,6 +1,6 @@
 {
   "name": "pm2-mongodb-stats",
-  "version": "1.7.11",
+  "version": "1.7.12",
   "description": "PM2: MongoDB Servers Stats",
   "main": "app.js",
   "dependencies": {

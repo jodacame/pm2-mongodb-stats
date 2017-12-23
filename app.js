@@ -216,7 +216,7 @@ setInterval(function() {
 
 var getStats = function(callback){
   var MongoClient = require('mongodb').MongoClient
-  var url = 'mongodb://localhost:27017/test'
+  var url = 'mongodb://localhost:27017/admin'
   var conn = MongoClient.connect(url, function(err, db) {
       var adminDb = db.admin();
       adminDb.serverStatus(function(err, info) {
