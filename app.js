@@ -150,6 +150,11 @@ setInterval(function() {
         stats.lastCommand = data.opcounters.command;
         stats.lastBytesIn = data.network.bytesIn;
         stats.lastBytesOut = data.network.bytesOut;
+        stats.version = data.version;
+        stats.uptime = data.uptime;
+        stats.connections.current = data.connections.current;
+        stats.connections.totalCreated = data.connections.totalCreated;
+        stats.connections.available = data.connections.available;
         //console.log(stats);
     });
   }, refresh_rate);
