@@ -12,7 +12,7 @@ pmx.initModule({
   widget : {
 
     // Logo displayed
-    logo : 'https://app.keymetrics.io/img/logo/keymetrics-300.png',
+    logo : 'https://raw.githubusercontent.com/jodacame/pm2-mongodb-stats/master/logo.png',
 
     // Module colors
     // 0 = main element
