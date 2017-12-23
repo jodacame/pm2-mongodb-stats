@@ -19,7 +19,7 @@ pmx.initModule({
     // 1 = secondary
     // 2 = main border
     // 3 = secondary border
-    theme            : ['#141A1F', '#222222', '#3ff', '#3ff'],
+    theme            : ['#141A1F', '#222222', '#000', '#000'],
 
     // Section to show / hide
     el : {
@@ -34,7 +34,7 @@ pmx.initModule({
       meta    : true,
 
       // Custom metrics to put in BIG
-      main_probes : ['version']
+      main_probes : ['MongoDB','Uptime','Connections','Network']
     }
 
   }
