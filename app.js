@@ -29,12 +29,12 @@ pmx.initModule({
 
     // Main block to show / hide
     block : {
-      actions : false,
+      actions : true,
       issues  : true,
       meta    : true,
 
       // Custom metrics to put in BIG
-      main_probes : ['MongoDB','Uptime','Connections','Network']
+      main_probes : ['MongoDB','Uptime','Connections','Network','Connections H']
     }
 
   }
@@ -89,6 +89,10 @@ pmx.initModule({
     }
   });
 
+  var histogramConnections = Probe.histogram({
+    name        : 'Connections H',
+    measurement : 'mean'
+  });
 
 
 
@@ -143,6 +147,7 @@ setInterval(function() {
           stats.netIn = (Math.round((data.network.bytesIn - stats.lastBytesIn) * 1000 / refresh_rate));
           stats.netOut = (Math.round((data.network.bytesOut - stats.lastBytesOut) * 1000 / refresh_rate));
           stats.connections.avg = (Math.round((data.connections.totalCreated - stats.connections.totalCreated) * 1000 / refresh_rate));
+
         }
         stats.lastInsert = data.opcounters.insert;
         stats.lastQuery = data.opcounters.query;
@@ -156,6 +161,7 @@ setInterval(function() {
         stats.connections.current = data.connections.current;
         stats.connections.totalCreated = data.connections.totalCreated;
         stats.connections.available = data.connections.available;
+        histogramConnections.update(stats.connections.current);
         //console.log(stats);
     });
   }, refresh_rate);
