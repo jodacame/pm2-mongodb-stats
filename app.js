@@ -73,7 +73,7 @@ pmx.initModule({
   Probe.metric({
     name : 'Connections',
     value : function() {
-      histogramConex.update(stats.connections.current);
+      histogramConex.update(parseFloat(stats.connections.current));
       return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"]";
     },
     alert : {
@@ -108,18 +108,21 @@ pmx.initModule({
       return stats.insert+"/sec";
     }
   });
-  Probe.metric({
-    name : 'Query',
-    value : function() {
-      return stats.query+"/sec";
-    }
-  });
+  
   Probe.metric({
     name : 'Update',
     value : function() {
       return stats.update+"/sec";
     }
   });
+
+  Probe.metric({
+    name : 'Query',
+    value : function() {
+      return stats.query+"/sec";
+    }
+  });
+
   Probe.metric({
     name : 'Delete',
     value : function() {
