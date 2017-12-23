@@ -78,10 +78,10 @@ pmx.initModule({
     },
     alert : {
       mode  : 'threshold',
-      value : 7,
-      msg   : '> 100 connections', // optional
+      value : 1000,
+      msg   : '> 1000 connections', // optional
       action: function() { //optional
-        console.error('MongoDB 100+ connections');
+        console.error('MongoDB 1000+ connections');
       },
       cmp   : function(value, threshold) { //optional
         return (parseFloat(stats.connections.current) > threshold); // default check
