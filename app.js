@@ -73,7 +73,7 @@ pmx.initModule({
   Probe.metric({
     name : 'Connections',
     value : function() {
-      histogramConex.update(parseFloat(stats.connections.current));
+
       return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"]";
     },
     alert : {
@@ -89,12 +89,14 @@ pmx.initModule({
     }
   });
 
-  var histogramConex = Probe.histogram({
-    name        : 'Connections [AVG]',
-    measurement : 'mean'
+
+
+  Probe.metric({
+    name : 'Connections',
+    value : function() {
+      return stats.connections.avg+"/sec";
+    }
   });
-
-
   Probe.metric({
     name : 'Network',
     value : function() {
@@ -108,7 +110,7 @@ pmx.initModule({
       return stats.insert+"/sec";
     }
   });
-  
+
   Probe.metric({
     name : 'Update',
     value : function() {
@@ -145,6 +147,7 @@ setInterval(function() {
           stats.command = (Math.round((data.opcounters.command - stats.lastCommand) * 1000 / refresh_rate));
           stats.netIn = (Math.round((data.network.bytesIn - stats.lastBytesIn) * 1000 / refresh_rate));
           stats.netOut = (Math.round((data.network.bytesOut - stats.lastBytesOut) * 1000 / refresh_rate));
+          stats.connections.avg = (Math.round((data.connections.totalCreated - stats.connections.totalCreated) * 1000 / refresh_rate));
         }
         stats.lastInsert = data.opcounters.insert;
         stats.lastQuery = data.opcounters.query;
