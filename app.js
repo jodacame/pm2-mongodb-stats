@@ -78,7 +78,7 @@ pmx.initModule({
     },
     alert : {
       mode  : 'threshold',
-      value : 10,
+      value : 7,
       msg   : '> 100 connections', // optional
       action: function() { //optional
         console.error('MongoDB 100+ connections');
