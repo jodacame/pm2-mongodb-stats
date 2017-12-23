@@ -75,6 +75,17 @@ pmx.initModule({
     value : function() {
       histogramConex.update(stats.connections.current);
       return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"]";
+    },
+    alert : {
+      mode  : 'threshold',
+      value : 10,
+      msg   : '> 100 connections', // optional
+      action: function() { //optional
+        console.error('MongoDB 100+ connections');
+      },
+      cmp   : function(value, threshold) { //optional
+        return (parseFloat(value) > threshold); // default check
+      }
     }
   });
 
