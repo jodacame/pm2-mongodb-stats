@@ -67,14 +67,14 @@ pmx.initModule({
   Probe.metric({
     name : 'Uptime',
     value : function() {
-      return "⏱ "+formatSeconds(stats.uptime);
+      return formatSeconds(stats.uptime);
     }
   });
   Probe.metric({
     name : 'Connections',
     value : function() {
 
-      return "💻 "+stats.connections.current+" ("+((stats.connections.current*100)/stats.connections.available).toFixed(2)+"%) ["+stats.connections.avg+"/sec]";
+      return stats.connections.current+" ("+((stats.connections.current*100)/stats.connections.available).toFixed(2)+"%) ["+stats.connections.avg+"/sec]";
     },
     alert : {
       mode  : 'threshold',
