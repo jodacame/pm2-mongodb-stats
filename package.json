@@ -1,7 +1,7 @@
 {
   "name": "pm2-mongodb-stats",
-  "version": "1.7.2",
-  "description": "MongoDB Servers Stats",
+  "version": "1.7.3",
+  "description": "PM2: MongoDB Servers Stats",
   "main": "app.js",
   "dependencies": {
     "pmx": "beta",
@@ -21,6 +21,7 @@
       "script": "app.js"
     }
   ],
+  "keywords":["mongodb","mongo","pm2","nodejs","metrics"],
   "author": "jodacame",
   "license": "MIT"
 }
