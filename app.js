@@ -176,6 +176,7 @@ pmx.initModule({
         stats.lastCommand = data.opcounters.command;
         stats.lastBytesIn = data.network.bytesIn;
         stats.lastBytesOut = data.network.bytesOut;
+        console.log(stats);
     });
   }, 1000);
 
