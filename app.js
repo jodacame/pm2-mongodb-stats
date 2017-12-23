@@ -74,7 +74,7 @@ pmx.initModule({
     name : 'Connections',
     value : function() {
 
-      return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"] ["+stats.connections.avg+"/sec]";
+      return stats.connections.current+"/"+stats.connections.available+" ["+stats.connections.totalCreated+"] ["+stats.connections.avg+"/sec]";
     },
     alert : {
       mode  : 'threshold',
