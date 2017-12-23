@@ -53,7 +53,7 @@ pmx.initModule({
    *   For more documentation about metrics: http://bit.ly/1PZrMFB
    */
   var Probe = pmx.probe();
-
+  var cache = {};
   var value_to_inspect = 0;
 
 
@@ -103,9 +103,9 @@ pmx.initModule({
   });
 
   Probe.metric({
-    name : 'Insert [TOTAL]',
+    name : 'Insert [AVG]',
     value : function() {
-      return stats.opcounters.insert;
+      return stats.insert;
     }
   });
   Probe.metric({
@@ -158,8 +158,25 @@ pmx.initModule({
 
   setInterval(function() {
     // Then we can see that this value increase over the time in Keymetrics
-    value_to_inspect++;
-    getStats();
+    var refresh_rate = 1000;
+    getStats(function(data){
+      if (typeof stats.lastInsert != 'undefined') {
+          stats.insert = (Math.round((data.opcounters.insert - stats.lastInsert) * 1000 / refresh_rate));
+          stats.query = (Math.round((data.opcounters.query - stats.lastQuery) * 1000 / refresh_rate));
+          stats.update = (Math.round((data.opcounters.update - stats.lastUpdate) * 1000 / refresh_rate));
+          stats.deleted = (Math.round((data.opcounters.delete - stats.lastDelete) * 1000 / refresh_rate));
+          stats.command = (Math.round((data.opcounters.command - stats.lastCommand) * 1000 / refresh_rate));
+          stats.netIn = (Math.round((data.network.bytesIn - stats.lastBytesIn) * 1000 / refresh_rate));
+          stats.netOut = (Math.round((data.network.bytesOut - stats.lastBytesOut) * 1000 / refresh_rate));
+        }
+        stats.lastInsert = data.opcounters.insert;
+        stats.lastQuery = data.opcounters.query;
+        stats.lastUpdate = data.opcounters.update;
+        stats.lastDelete = data.opcounters.delete;
+        stats.lastCommand = data.opcounters.command;
+        stats.lastBytesIn = data.network.bytesIn;
+        stats.lastBytesOut = data.network.bytesOut;
+    });
   }, 1000);
 
 
@@ -210,7 +227,7 @@ pmx.initModule({
 });
 
 
-var getStats = function(){
+var getStats = function(callback){
   var MongoClient = require('mongodb').MongoClient
   var url = 'mongodb://localhost:27017/test'
   var conn = MongoClient.connect(url, function(err, db) {
@@ -218,6 +235,7 @@ var getStats = function(){
       adminDb.serverStatus(function(err, info) {
           stats = info;
           db.close();
+          callback(info)
       })
   })
 }
