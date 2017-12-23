@@ -235,7 +235,8 @@ var getStats = function(callback){
       adminDb.serverStatus(function(err, info) {
           stats = info;
           db.close();
-          callback(info)
+          if(callback)
+            callback(info);
       })
   })
 }
