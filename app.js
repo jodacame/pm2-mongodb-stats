@@ -74,7 +74,7 @@ pmx.initModule({
     name : 'Connections',
     value : function() {
 
-      return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"]";
+      return stats.connections.current+"/"+stats.connections.available+" [Total: "+stats.connections.totalCreated+"] ["+stats.connections.avg+"/sec]";
     },
     alert : {
       mode  : 'threshold',
@@ -91,12 +91,7 @@ pmx.initModule({
 
 
 
-  Probe.metric({
-    name : 'Connections',
-    value : function() {
-      return stats.connections.avg+"/sec";
-    }
-  });
+
   Probe.metric({
     name : 'Network',
     value : function() {
