@@ -5,7 +5,13 @@ stats.connections = {};
 stats.network = {};
 stats.opcounters = {};
 
-/* TODO: Web */
+var config;
+
+
+
+
+
+
 pmx.initModule({
 
 
@@ -31,27 +37,17 @@ pmx.initModule({
     block : {
       actions : true,
       issues  : true,
-      meta    : true,
+      meta    : false,
 
       // Custom metrics to put in BIG
-      main_probes : ['MongoDB','Uptime','Connections','Network','Connections AVG']
+      main_probes : ['MongoDB','Uptime','Connections','Connections AVG','Network']
     }
 
   }
 
 }, function(err, conf) {
 
-  /**
-   * Module specifics like connecting to a database and
-   * displaying some metrics
-   */
-
-  /**
-   *                      Custom Metrics
-   *
-   * Let's expose some metrics that will be displayed into Keymetrics
-   *   For more documentation about metrics: http://bit.ly/1PZrMFB
-   */
+  config = conf;
   var Probe = pmx.probe();
   var cache = {};
   var value_to_inspect = 0;
@@ -99,7 +95,7 @@ pmx.initModule({
   Probe.metric({
     name : 'Network',
     value : function() {
-      return "⬇ "+bytesToSize(stats.netIn)+"/sec ⬆ "+bytesToSize(stats.netOut)+"/sec";
+      return "⬇ "+bytesToSize(stats.networkIn)+"/sec ⬆ "+bytesToSize(stats.networkOut)+"/sec";
     }
   });
 
@@ -139,14 +135,14 @@ var refresh_rate = 1000;
 setInterval(function() {
     getStats(function(data){
       if (typeof stats.lastInsert != 'undefined') {
-          stats.insert = (Math.round((data.opcounters.insert - stats.lastInsert) * 1000 / refresh_rate));
-          stats.query = (Math.round((data.opcounters.query - stats.lastQuery) * 1000 / refresh_rate));
-          stats.update = (Math.round((data.opcounters.update - stats.lastUpdate) * 1000 / refresh_rate));
-          stats.deleted = (Math.round((data.opcounters.delete - stats.lastDelete) * 1000 / refresh_rate));
-          stats.command = (Math.round((data.opcounters.command - stats.lastCommand) * 1000 / refresh_rate));
-          stats.netIn = (Math.round((data.network.bytesIn - stats.lastBytesIn) * 1000 / refresh_rate));
-          stats.netOut = (Math.round((data.network.bytesOut - stats.lastBytesOut) * 1000 / refresh_rate));
-          stats.connections.avg = (Math.round((data.connections.totalCreated - stats.connections.totalCreated) * 1000 / refresh_rate));
+          stats.insert = Math.round(data.opcounters.insert - stats.lastInsert);
+          stats.query = Math.round(data.opcounters.query - stats.lastQuery);
+          stats.update = Math.round(data.opcounters.update - stats.lastUpdate);
+          stats.deleted = Math.round(data.opcounters.delete - stats.lastDelete);
+          stats.command = Math.round(data.opcounters.command - stats.lastCommand);
+          stats.networkIn = Math.round(data.network.bytesIn - stats.lastBytesIn);
+          stats.networkOut = Math.round(data.network.bytesOut - stats.lastBytesOut);
+          stats.connections.avg = Math.round(data.connections.totalCreated - stats.connections.totalCreated);
 
         }
         stats.lastInsert = data.opcounters.insert;
@@ -162,61 +158,21 @@ setInterval(function() {
         stats.connections.totalCreated = data.connections.totalCreated;
         stats.connections.available = data.connections.available;
         histogramConnections.update(stats.connections.current);
-        //console.log(stats);
     });
   }, refresh_rate);
 
 
-  /**
-   *                Simple Actions
-   *
-   *   Now let's expose some triggerable functions
-   *  Once created you can trigger this from Keymetrics
-   *
-   */
-  pmx.action('env', function(reply) {
-    return reply({
-      env: process.env
-    });
-  });
-
-  /**
-   *                 Scoped Actions
-   *
-   *     This are for long running remote function
-   * This allow also to res.emit logs to see the progress
-   *
-   **/
-  var spawn = require('child_process').spawn;
-
-  pmx.scopedAction('lsof cmd', function(options, res) {
-    var child = spawn('lsof', []);
-
-    child.stdout.on('data', function(chunk) {
-      chunk.toString().split('\n').forEach(function(line) {
-        /**
-         * Here we send logs attached to this command
-         */
-        res.send(line);
-      });
-    });
-
-    child.stdout.on('end', function(chunk) {
-      /**
-       * Then we emit end to finalize the function
-       */
-      res.end('end');
-    });
-
-  });
 
 
 });
 
 
+
+
 var getStats = function(callback){
-  var MongoClient = require('mongodb').MongoClient
-  var url = 'mongodb://localhost:27017/admin'
+
+  var url = process.env.MONGO || config.mongo;
+  var MongoClient = require('mongodb').MongoClient;
   var conn = MongoClient.connect(url, function(err, db) {
       var adminDb = db.admin();
       adminDb.serverStatus(function(err, info) {
@@ -240,4 +196,3 @@ function bytesToSize(bytes) {
    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
-//getStats();

@@ -1,6 +1,6 @@
 {
   "name": "pm2-mongodb-stats",
-  "version": "1.7.12",
+  "version": "1.7.13",
   "description": "PM2: MongoDB Servers Stats",
   "main": "app.js",
   "dependencies": {
@@ -12,7 +12,7 @@
     "url": "https://github.com/jodacame/pm2-mongodb-stats.git"
   },
   "config": {
-    "refresh": 1000
+    "mongo": "mongodb://localhost:27017"
   },
   "apps": [
     {
@@ -28,6 +28,6 @@
     "nodejs",
     "metrics"
   ],
-  "author": "jodacame",
+  "author": "Jodacame",
   "license": "MIT"
 }
