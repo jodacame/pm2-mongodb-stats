@@ -98,32 +98,32 @@ pmx.initModule({
   Probe.metric({
     name : 'Network',
     value : function() {
-      return "⬇ "+bytesToSize(stats.network.bytesIn)+" ⬆ "+bytesToSize(stats.network.bytesOut);
+      return "⬇ "+bytesToSize(stats.netIn)+" ⬆ "+bytesToSize(stats.netOut);
     }
   });
 
   Probe.metric({
-    name : 'Insert [AVG]',
+    name : 'Insert',
     value : function() {
-      return stats.insert;
+      return stats.insert+"/sec";
     }
   });
   Probe.metric({
-    name : 'Query [TOTAL]',
+    name : 'Query',
     value : function() {
-      return stats.opcounters.query;
+      return stats.query+"/sec";
     }
   });
   Probe.metric({
-    name : 'Update [TOTAL]',
+    name : 'Update',
     value : function() {
-      return stats.opcounters.update;
+      return stats.update+"/sec";
     }
   });
   Probe.metric({
-    name : 'Delete [TOTAL]',
+    name : 'Delete',
     value : function() {
-      return stats.opcounters.delete;
+      return stats.deleted+"/sec";
     }
   });
 
@@ -157,7 +157,7 @@ pmx.initModule({
 
 
   setInterval(function() {
-    // Then we can see that this value increase over the time in Keymetrics
+
     var refresh_rate = 1000;
     getStats(function(data){
       if (typeof stats.lastInsert != 'undefined') {
@@ -178,7 +178,7 @@ pmx.initModule({
         stats.lastBytesOut = data.network.bytesOut;
         //console.log(stats);
     });
-  }, 1000);
+  }, refresh_rate);
 
 
   /**
