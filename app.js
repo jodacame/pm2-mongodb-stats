@@ -34,7 +34,7 @@ pmx.initModule({
       meta    : true,
 
       // Custom metrics to put in BIG
-      main_probes : ['MongoDB','Uptime','Connections','Network','Connections H']
+      main_probes : ['MongoDB','Uptime','Connections','Network','Connections AVG']
     }
 
   }
@@ -90,7 +90,7 @@ pmx.initModule({
   });
 
   var histogramConnections = Probe.histogram({
-    name        : 'Connections H',
+    name        : 'Connections AVG',
     measurement : 'mean'
   });
 
